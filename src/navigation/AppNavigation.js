@@ -12,20 +12,30 @@ import { AppHeaderIcon } from "../components/AppHeaderIcon"
 import { Ionicons } from '@expo/vector-icons';
 import {HeaderButtons, Item} from "react-navigation-header-buttons"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-const Tab=createBottomTabNavigator()
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+const Drawer=createDrawerNavigator()
+//в зависимости от платформі делаем разные табы
+const Tab = Platform.OS === "android" ? createMaterialBottomTabNavigator() : createBottomTabNavigator()
 const Stack = createStackNavigator()
-const MainNavigation = () => {
+//создадим объект с общими опциями для экранов
+const options = {
+    headerStyle: {
+                    backgroundColor: Platform.OS==="android"?THEMES.MAIN_COLOR:"white"
+                },
+    headerTintColor: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
+    headerTitleStyle: {
+        color: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
+        fontFamily:"regular"
+    }
+}
+//
+const MainNavigation = ({navigation}) => {
     return (
             <Stack.Navigator initialRouteName="MainScreen" screenOptions={{
                 title: "My App",
-                headerStyle: {
-                    backgroundColor: Platform.OS==="android"?THEMES.MAIN_COLOR:"white"
-                },
-                headerTintColor: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
-                headerTitleStyle: {
-                    color: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
-                    fontFamily:"regular"
-                }
+                ...options
                 
             }}>
                 <Stack.Screen name="MainScreen" component={MainScreen} options={{
@@ -36,15 +46,12 @@ const MainNavigation = () => {
                     ),
                     headerLeft: () => (
                             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => alert('search')} />
+                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => navigation.toggleDrawer()} />
                             </HeaderButtons>
                     )
                 }}/>
-                <Stack.Screen name="AboutScreen" component={AboutScreen} />
-                <Stack.Screen name="BookedScreen" component={BookedScreen} />
-                <Stack.Screen name="CreateScreen" component={CreateScreen} />
-                <Stack.Screen name="PostScreen"
-                    component={PostScreen}
+
+                <Stack.Screen name="PostScreen" component={PostScreen}
                     //options - либо обьект, либо функция, которая возвращает обьект
                     options={({ route }) => ({
                         title: route.params.post.text
@@ -52,24 +59,16 @@ const MainNavigation = () => {
             </Stack.Navigator>
     )
 }
-const BookedNavigation = () => {
+const BookedNavigation = ({navigation}) => {
     return(
     <Stack.Navigator initialRouteName="BookedScreen" screenOptions={{
-                title: "Booked",
-                headerStyle: {
-                    backgroundColor: Platform.OS==="android"?THEMES.MAIN_COLOR:"white"
-                },
-                headerTintColor: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
-                headerTitleStyle: {
-                    color: Platform.OS==="android"?"white":THEMES.MAIN_COLOR,
-                    fontFamily:"regular"
-                }
-                
+            title: "Booked",
+            ...options     
             }}>
                 <Stack.Screen name="BookedScreen" component={BookedScreen} options={{
                     headerLeft: () => (
                             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => alert('search')} />
+                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => navigation.toggleDrawer()} />
                             </HeaderButtons>
                     )
                 }}/>
@@ -82,16 +81,26 @@ const BookedNavigation = () => {
         </Stack.Navigator>
     )
 }
-export const AppNavigation = () => {
+const TabNavigation = () => {
     return (
-        <NavigationContainer>
-            <Tab.Navigator
+        <Tab.Navigator
+                shifting={true}
                 tabBarOptions={{
-                activeTintColor: THEMES.MAIN_COLOR
+                    activeTintColor: THEMES.MAIN_COLOR
             }}>
                 <Tab.Screen name="Main" component={MainNavigation} options={{ tabBarIcon: ({ color }) => <Ionicons name="md-folder-open-sharp" size={24} color={color}/>}}/>
                 <Tab.Screen name="Booked" component={BookedNavigation} options={{tabBarIcon:({color})=><Ionicons name="ios-star-sharp" size={24} color={color} />}} />
             </Tab.Navigator>
+    )
+}
+export const AppNavigation = () => {
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator>
+                <Drawer.Screen name="Tab" component={TabNavigation} />
+                <Drawer.Screen name="About" component={AboutScreen} />
+                <Drawer.Screen name="Create" component={CreateScreen}/>
+            </Drawer.Navigator>
         </NavigationContainer>
         
     )
