@@ -30,6 +30,12 @@ const options = {
         fontFamily:"regular"
     }
 }
+const menu =  (navigation) => (
+                            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => navigation.toggleDrawer()} />
+                            </HeaderButtons>
+                    )
+
 //
 const MainNavigation = ({navigation}) => {
     return (
@@ -41,14 +47,11 @@ const MainNavigation = ({navigation}) => {
                 <Stack.Screen name="MainScreen" component={MainScreen} options={{
                     headerRight: () => (
                             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="Add" iconName="camera" onPress={() => alert('search')} />
+                                <Item title="Add" iconName="camera" onPress={() => navigation.navigate('Create')} />
                             </HeaderButtons>
                     ),
-                    headerLeft: () => (
-                            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => navigation.toggleDrawer()} />
-                            </HeaderButtons>
-                    )
+                    headerLeft: ()=>menu(navigation)
+                    
                 }}/>
 
                 <Stack.Screen name="PostScreen" component={PostScreen}
@@ -66,11 +69,7 @@ const BookedNavigation = ({navigation}) => {
             ...options     
             }}>
                 <Stack.Screen name="BookedScreen" component={BookedScreen} options={{
-                    headerLeft: () => (
-                            <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="menu" iconName="ios-menu-sharp" onPress={() => navigation.toggleDrawer()} />
-                            </HeaderButtons>
-                    )
+                    headerLeft: ()=>menu(navigation)
                 }}/>
                 <Stack.Screen name="PostScreen"
                     component={PostScreen}
@@ -81,6 +80,27 @@ const BookedNavigation = ({navigation}) => {
         </Stack.Navigator>
     )
 }
+const AboutNavigation = ({navigation}) => {
+    return (
+        <Stack.Navigator screenOptions={{
+            title: "About us",
+            ...options     
+            }}>
+            <Stack.Screen name="About"component={AboutScreen} options={{headerLeft:  ()=>menu(navigation)}}/>
+        </Stack.Navigator>
+    )
+}
+const CreateNavigation = ({navigation}) => {
+    return (
+        <Stack.Navigator screenOptions={{
+            title: "Create a post",
+            ...options     
+            }}>
+            <Stack.Screen name="Create"component={CreateScreen} options={{headerLeft:  ()=>menu(navigation)}}/>
+        </Stack.Navigator>
+    )
+}
+
 const TabNavigation = () => {
     return (
         <Tab.Navigator
@@ -96,10 +116,10 @@ const TabNavigation = () => {
 export const AppNavigation = () => {
     return (
         <NavigationContainer>
-            <Drawer.Navigator>
-                <Drawer.Screen name="Tab" component={TabNavigation} />
-                <Drawer.Screen name="About" component={AboutScreen} />
-                <Drawer.Screen name="Create" component={CreateScreen}/>
+            <Drawer.Navigator drawerContentOptions={{activeTintColor:THEMES.MAIN_COLOR, labelStyle:{fontFamily:"bold"}}}>
+                <Drawer.Screen name="Tab" component={TabNavigation} options={{drawerLabel:"Home"}} />
+                <Drawer.Screen name="About" component={AboutNavigation} />
+                <Drawer.Screen name="Create" component={CreateNavigation}/>
             </Drawer.Navigator>
         </NavigationContainer>
         
