@@ -5,7 +5,7 @@ const initialState = {
 }
 export const postReducer = (state = initialState, action) => {
     switch (action.type) {
-        case (APP_LOAD): return ({ ...state, data: action.data })
+        case (APP_LOAD): return ({ ...state, data: action.data, booked:action.data.filter(i=>i.booked) })
         default:return state
     }
 }

@@ -4,7 +4,7 @@ import { PostList } from "../components/PostList"
 import { useSelector } from "react-redux"
 
 export const BookedScreen = ({ navigation }) => {
-    const booked=useSelector(state=>state.post.data.filter(i=>i.booked))
+    const booked=useSelector(state=>state.post.booked)
     return (
         <PostList data={booked} navigation={navigation}/>
     )
