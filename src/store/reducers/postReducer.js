@@ -1,4 +1,11 @@
-const initialState={}
+import { APP_LOAD } from "../../types"
+const initialState = {
+    data: [],
+    booked:[]
+}
 export const postReducer = (state = initialState, action) => {
-    return state
+    switch (action.type) {
+        case (APP_LOAD): return ({ ...state, data: action.data })
+        default:return state
+    }
 }

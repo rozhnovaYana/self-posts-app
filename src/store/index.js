@@ -1,5 +1,6 @@
 import { combineReducers, createStore } from "redux"
-import {postReducer} from "./reducers/postReducer"
+import { postReducer } from "./reducers/postReducer"
+
 const rootReducer = combineReducers({
    post: postReducer
 })
