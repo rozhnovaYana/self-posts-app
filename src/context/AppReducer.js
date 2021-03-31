@@ -1,6 +1,15 @@
-import {APP_LOAD} from "../types"
+import {APP_LOAD, TOGGLE_BOOKED} from "../types"
 const handlers = {
-    [APP_LOAD]: (state, { data }) => ({ ...state, data }),
+    [APP_LOAD]: (state, { data }) => ({ ...state, data, booked: data.filter(i=>i.booked)}),
+    [TOGGLE_BOOKED]: (state, { id }) => {
+        const data = state.data.map(post => {
+        if (post.id === id) {
+            post.booked = !post.booked
+        }
+        return post
+    })
+        return {...state, data,booked:data.filter(i=>i.booked) 
+    }},
     DEFAULT:state=>state
     }
     

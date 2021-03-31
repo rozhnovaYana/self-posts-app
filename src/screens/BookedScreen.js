@@ -5,9 +5,10 @@ import { PostList } from "../components/PostList"
 import { AppContext } from "../context/AppContext"
 
 export const BookedScreen = ({ navigation }) => {
-    const {data}=useContext(AppContext)
+    const { booked} = useContext(AppContext)
+
     return (
-        <PostList data={data.filter(post => post.booked)} navigation={navigation}/>
+        <PostList data={booked} navigation={navigation}/>
     )
 }
 const styles = StyleSheet.create({

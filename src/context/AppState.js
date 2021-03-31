@@ -1,11 +1,12 @@
 import React, { useReducer } from "react"
 import { AppContext } from "./AppContext"
-import {APP_LOAD} from "../types"
+import {APP_LOAD, TOGGLE_BOOKED} from "../types"
 import { DATA } from "../data"
 import {AppReducer} from "./AppReducer"
 export const AppState = ({ children }) => {
     const initial = {
-        data: []
+        data: [],
+        booked:[]
     }
     const [state, dispatch] = useReducer(AppReducer, initial)
     const loadData = () => {
@@ -14,5 +15,11 @@ export const AppState = ({ children }) => {
             data:DATA
         })
     }
-    return <AppContext.Provider value={{data:state.data, loadData}}>{children}</AppContext.Provider>
+    const toggleBooked = (id) => {
+        dispatch({
+            type: TOGGLE_BOOKED,
+            id
+        })
+    }
+    return <AppContext.Provider value={{data:state.data, loadData, toggleBooked, booked:state.booked}}>{children}</AppContext.Provider>
 }

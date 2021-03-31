@@ -1,22 +1,24 @@
-import React, {useLayoutEffect} from "react"
+import React, {useContext, useEffect, useLayoutEffect} from "react"
 import { View, Text, StyleSheet, ScrollView, Image, Button, Alert } from "react-native"
 import { AppButton } from "../components/ui/AppButton";
 import { THEMES } from "../themes/theme";
 import { HeaderButtons, Item } from "react-navigation-header-buttons"
-import {AppHeaderIcon} from "../components/AppHeaderIcon"
+import { AppHeaderIcon } from "../components/AppHeaderIcon"
+import {AppContext} from "../context/AppContext"
 
 export const PostScreen = ({ route, navigation }) => {
     const { post } = route.params;
+    const { toggleBooked, booked } = useContext(AppContext)
     const iconBooked=post.booked?'star':'star-outline'
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                             <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
-                                <Item title="Add" iconName={iconBooked} onPress={() => alert('search')} />
+                                <Item title="Add" iconName={iconBooked} onPress={() => toggleBooked(post.id)} />
                             </HeaderButtons>
                         )
         })
-    }, [navigation])
+    }, [navigation, booked])
     const removeHandler = () => {
         Alert.alert(
             "Delete",
