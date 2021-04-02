@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { View, FlatList, StyleSheet } from "react-native"
-import {Post} from "./Post"
+import { Post } from "./Post"
+
 export const PostList = ({ data, navigation }) => {
     const openPostScreen = (post) => {
         navigation.navigate("PostScreen", {
