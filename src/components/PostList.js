@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { View, FlatList, StyleSheet } from "react-native"
+import { View, FlatList, StyleSheet, Text } from "react-native"
 import { Post } from "./Post"
 
 export const PostList = ({ data, navigation }) => {
@@ -7,6 +7,13 @@ export const PostList = ({ data, navigation }) => {
         navigation.navigate("PostScreen", {
             post
         })
+    }
+    if (!data.length) {
+        return (
+            <View style={styles.wrapper}>
+                <Text style={styles.text}>Нет записей</Text>
+            </View> 
+        )
     }
     return (
         <View style={styles.wrapper}>
@@ -21,5 +28,10 @@ export const PostList = ({ data, navigation }) => {
 const styles = StyleSheet.create({
     wrapper: {
         
+    },
+    text: {
+        fontSize: 25,
+        fontFamily: "regular",
+        padding:10
     }
 })

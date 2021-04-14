@@ -1,10 +1,10 @@
-import { DATA } from "../../data"
-import { APP_LOAD, REMOVE_POST, TOGGLE_BOOKED } from "../../types"
+
+import { ADD_POST, APP_LOAD, REMOVE_POST, TOGGLE_BOOKED } from "../../types"
 
 export const postAction = () => {
     return {
         type: APP_LOAD,
-        data:DATA
+        data:[]
     }
 }
 
@@ -18,5 +18,12 @@ export const removePost = (id) => {
     return {
         type: REMOVE_POST,
         id
+    }
+}
+export const addPost = (post) =>{
+    post.id = new Date().toJSON()
+    return {
+        type: ADD_POST,
+        post
     }
 }

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect} from "react"
+import React, {useLayoutEffect} from "react"
 import { View, Text, StyleSheet, ScrollView, Image, Button, Alert } from "react-native"
 import { AppButton } from "../components/ui/AppButton";
 import { THEMES } from "../themes/theme";

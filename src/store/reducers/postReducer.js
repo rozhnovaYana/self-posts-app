@@ -1,4 +1,4 @@
-import { APP_LOAD, REMOVE_POST, TOGGLE_BOOKED } from "../../types"
+import { ADD_POST, APP_LOAD, REMOVE_POST, TOGGLE_BOOKED } from "../../types"
 const initialState = {
     data: [],
     booked:[]
@@ -20,6 +20,10 @@ export const postReducer = (state = initialState, action) => {
             const data = state.data.filter(post => post.id !== action.id)
             return ({
                 ...state, data, booked:data.filter(i => i.booked)
+            })
+        case (ADD_POST):
+            return ({
+                ...state, data:[action.post, ...state.data]
             })
         default:return state
     }
