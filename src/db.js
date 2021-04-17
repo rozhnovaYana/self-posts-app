@@ -14,4 +14,52 @@ export class DB{
             })
         })
     }
+    static load() {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'SELECT * FROM posts',
+                    [],
+                    (_, data) => resolve(data.rows._array),
+                    (_, error) => reject(error)
+                )
+            })
+        })
+    }
+    static addPost({text, img, date, booked}) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'INSERT INTO posts (text, img, date, booked) VALUES(?,?,?,?)',
+                    [text,img,date,booked],
+                    (_, data) => resolve(data.insertId),
+                    (_, error) => reject(error)
+                )
+            })
+        })
+    }
+     static removePost(id) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'DELETE FROM posts WHERE id=?',
+                    [id],
+                    resolve(),
+                    (_, error) => reject(error)
+                )
+            })
+        })
+    }
+    static toggleBooked({id, booked}) {
+        return new Promise((resolve, reject) => {
+            db.transaction(tx => {
+                tx.executeSql(
+                    'UPDATE posts SET booked=? WHERE id=?',
+                    [booked?0:1, id],
+                    resolve(),
+                    (_, error) => reject(error)
+                )
+            })
+        })
+    }
 }

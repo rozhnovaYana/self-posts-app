@@ -7,9 +7,7 @@ export async function bootstrap() {
       "bold":require("../assets/fonts/OpenSans-Bold.ttf")
     })
     await DB.init()
-    console.log("Create DB")
   } catch {
-    console.log("ERROR")
   }
     
   }

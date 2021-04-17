@@ -5,7 +5,6 @@ import {AppButton} from "../components/ui/AppButton"
 
 
 export const ImageTake = ({pickUri}) => {
-  const [image, setImage] = useState(null)
     useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -22,10 +21,7 @@ export const ImageTake = ({pickUri}) => {
       aspect: [4, 3],
       quality: 1,
     });
-
-
     if (!result.cancelled) {
-      setImage(result.uri);
       pickUri(result.uri)
     } 
   };
@@ -34,7 +30,6 @@ export const ImageTake = ({pickUri}) => {
           <AppButton onPress={pickImage} >
                           Take a photo
                       </AppButton>
-          {image && <Image source={{ uri: image }} style={{ width:'100%', height: 200 }} />}
           </View>
     );
 }

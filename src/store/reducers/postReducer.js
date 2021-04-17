@@ -1,11 +1,12 @@
 import { ADD_POST, APP_LOAD, REMOVE_POST, TOGGLE_BOOKED } from "../../types"
 const initialState = {
     data: [],
-    booked:[]
+    booked: [],
+    loading:true
 }
 export const postReducer = (state = initialState, action) => {
     switch (action.type) {
-        case (APP_LOAD): return ({ ...state, data: action.data, booked: action.data.filter(i => i.booked) })
+        case (APP_LOAD): return ({ ...state, data: action.data, booked: action.data.filter(i => i.booked), loading:false })
         case (TOGGLE_BOOKED):
             const allPosts = state.data.map(post => {
                 if (post.id === action.id) {

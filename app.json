@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "self-posts-app",
+    "name": "Posts blog",
     "slug": "self-posts-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,13 +20,12 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package":"com.yana.self_posts_app",
+      "versionCode":1,
+      "permissions":[
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     }
   }
 }

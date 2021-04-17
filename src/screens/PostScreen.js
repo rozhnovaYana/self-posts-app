@@ -14,7 +14,7 @@ export const PostScreen = ({ route, navigation }) => {
     const dispatch = useDispatch()
     const booked = useSelector(state => state.post.booked.some(item => item.id === post.id))
     const toggleHandler = () => {
-        dispatch(toggleBooked(post.id))
+        dispatch(toggleBooked(post))
     }
     useLayoutEffect(() => {
         navigation.setOptions({
